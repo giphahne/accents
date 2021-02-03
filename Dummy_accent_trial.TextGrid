@@ -1,0 +1,68 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 57 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "Accented" 
+        xmin = 0 
+        xmax = 34 
+        intervals: size = 6 
+        intervals [1]:
+            xmin = 0 
+            xmax = 4.118361804358379 
+            text = "Ayer abrí la casa." 
+        intervals [2]:
+            xmin = 4.118361804358379 
+            xmax = 10.05976908463329 
+            text = "Él está en su casa" 
+        intervals [3]:
+            xmin = 10.05976908463329 
+            xmax = 16.85463818417421 
+            text = "María compró arroz" 
+        intervals [4]:
+            xmin = 16.85463818417421 
+            xmax = 22.20518728188035 
+            text = "La música acústica me gusta" 
+        intervals [5]:
+            xmin = 22.20518728188035 
+            xmax = 27.490085470412176 
+            text = "Ella es una académica" 
+        intervals [6]:
+            xmin = 27.490085470412176 
+            xmax = 34 
+            text = "Mañana tengo clase" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "Capitalized" 
+        xmin = 0 
+        xmax = 34 
+        intervals: size = 6 
+        intervals [1]:
+            xmin = 0 
+            xmax = 4.118361804358379 
+            text = "Ayer abrI la casa." 
+        intervals [2]:
+            xmin = 4.118361804358379 
+            xmax = 10.05976908463329 
+            text = "El estA en su casa" 
+        intervals [3]:
+            xmin = 10.05976908463329 
+            xmax = 16.85463818417421 
+            text = "MarIa comprO arroz" 
+        intervals [4]:
+            xmin = 16.85463818417421 
+            xmax = 22.20518728188035 
+            text = "La mUsica acUstica me gusta" 
+        intervals [5]:
+            xmin = 22.20518728188035 
+            xmax = 27.490085470412176 
+            text = "Ella es una acadEmica" 
+        intervals [6]:
+            xmin = 27.490085470412176 
+            xmax = 34 
+            text = "MaNana tengo clase" 
