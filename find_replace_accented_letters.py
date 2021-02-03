@@ -41,7 +41,10 @@ if __name__ == "__main__":
                    "ASCII CAPS in Praat .TextGrid files")
     parser = argparse.ArgumentParser(usage=None, description=description)
 
-    parser.add_argument("textgrid-file", type=open, help="")
-
-    print(args.textgrid_file)
+    parser.add_argument('--source-file', type=open)
+    parser.add_argument('--dest-file',
+                        type=argparse.FileType('w', encoding='UTF-16'))
+    args = parser.parse_args()
+    print(args.source_file)
+    print(args.dest_file)
     #remove_accents()
