@@ -1,3 +1,5 @@
+import argparse
+
 import textgrid
 from textgrid import IntervalTier
 from textgrid import Interval
@@ -35,4 +37,11 @@ def remove_accents(textgrid):
 
 
 if __name__ == "__main__":
-    remove_accents()
+    description = ("Replace diacritical marks with corresponding "
+                   "ASCII CAPS in Praat .TextGrid files")
+    parser = argparse.ArgumentParser(usage=None, description=description)
+
+    parser.add_argument("textgrid-file", type=open, help="")
+
+    print(args.textgrid_file)
+    #remove_accents()
