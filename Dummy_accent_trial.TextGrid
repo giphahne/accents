@@ -2,7 +2,7 @@ File type = "ooTextFile"
 Object class = "TextGrid"
 
 xmin = 0 
-xmax = 57 
+xmax = 34 
 tiers? <exists> 
 size = 2 
 item []: 
