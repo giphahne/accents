@@ -6,22 +6,80 @@ from textgrid import IntervalTier
 from textgrid import Interval
 
 
-def clean_mark(mark):
+def clean_char(char):
     """
+    replace accented letter with a capital letter.
 
-    replace each accented letter with a capital letter
-    use the same values as the original interval
-    except that each accented letter with be
-    replaced by a capital letter
-
-    >>> clean_mark(u"\U000000E1")
+    >>> clean_char(u"\U000000E1")
     'A'
 
-    >>> clean_mark(u"\U000000E9")
+    >>> clean_char(u"\U000000E9")
     'E'
 
-    >>> clean_mark(u"\U000000ED")
+    >>> clean_char(u"\U000000ED")
     'I'
+
+    >>> clean_char(u"\U000000F3")
+    'O'
+
+    >>> clean_char(u"\U000000FA")
+    'U'
+
+    >>> clean_char(u"\U000000C1")
+    'A'
+
+    >>> clean_char(u"\U000000C9")
+    'E'
+
+    >>> clean_char(u"\U000000CD")
+    'I'
+
+    >>> clean_char(u"\U000000D3")
+    'O'
+
+    >>> clean_char(u"\U000000DA")
+    'U'
+
+    >>> clean_char(u"\U000000F1")
+    'N'
+
+    >>> clean_char(u"\U000000D1")
+    'N'
+
+    >>> clean_char("A")
+    'A'
+
+    >>> clean_char("b")
+    'b'
+
+    """
+
+    NFKD_normalized_char = unicodedata.normalize('NFKD', char)
+
+    stripped_combining_char = "".join(
+        [c for c in NFKD_normalized_char if not unicodedata.combining(c)])
+
+    ascii_encoded_char = stripped_combining_char.encode('ascii')
+    utf8_decoded_char = ascii_encoded_char.decode("utf-8")
+
+    cleaned_char = utf8_decoded_char
+
+    if cleaned_char == char:
+        return char
+    else:
+        return cleaned_char.upper()
+
+
+def clean_mark(mark):
+    """
+    >>> clean_mark(u"\U000000E1\U00000061")
+    'Aa'
+
+    >>> clean_mark(u"\U000000E9\U00000062")
+    'Eb'
+
+    >>> clean_mark(u"\U00000061\U000000ED\U00000064\U00000061")
+    'aIda'
 
     >>> clean_mark(u"\U000000F3")
     'O'
@@ -58,20 +116,7 @@ def clean_mark(mark):
 
     """
 
-    NFKD_normalized_mark = unicodedata.normalize('NFKD', mark)
-
-    stripped_combining_mark = "".join(
-        [c for c in NFKD_normalized_mark if not unicodedata.combining(c)])
-
-    ascii_encoded_mark = stripped_combining_mark.encode('ascii')
-    utf8_decoded_mark = ascii_encoded_mark.decode("utf-8")
-
-    cleaned_mark = utf8_decoded_mark
-
-    if cleaned_mark == mark:
-        return mark
-    else:
-        return cleaned_mark.upper()
+    return "".join([clean_char(c) for c in mark])
 
 
 def clean_interval(old_interval):
