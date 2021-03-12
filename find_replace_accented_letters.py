@@ -1,4 +1,5 @@
 import argparse
+import unicodedata
 
 import textgrid
 from textgrid import IntervalTier
@@ -6,26 +7,87 @@ from textgrid import Interval
 
 
 def clean_mark(mark):
-    #             """
-    #             replace each accented letter with a capital letter
-    #             use the same values as the original interval
-    #             except that each accented letter with be
-    #             replaced by a capital letter
-    #             """
-    #             letter.replace("U+00E1", "A")
-    #             letter.replace("U+00E9", "E")
-    #             letter.replace("U+00ED", "I")
-    #             letter.replace("U+00F3", "O")
-    #             letter.replace("U+00FA", "U")
-    #             letter.replace("U+00C1", "A")
-    #             letter.replace("U+00C9", "E")
-    #             letter.replace("U+00CD", "I")
-    #             letter.replace("U+00D3", "O")
-    #             letter.replace("U+00DA", "U")
-    #             letter.replace("U+00F1", "N")
-    #             letter.replace("U+00D1", "N")
+    """
 
-    return mark.upper()
+    replace each accented letter with a capital letter
+    use the same values as the original interval
+    except that each accented letter with be
+    replaced by a capital letter
+
+    >>> clean_mark(u"\U000000E1")
+    'A'
+
+    >>> clean_mark(u"\U000000E9")
+    'E'
+
+    >>> clean_mark(u"\U000000ED")
+    'I'
+
+    >>> clean_mark(u"\U000000F3")
+    'O'
+
+    >>> clean_mark(u"\U000000FA")
+    'U'
+
+    >>> clean_mark(u"\U000000C1")
+    'A'
+
+    >>> clean_mark(u"\U000000C9")
+    'E'
+
+    >>> clean_mark(u"\U000000CD")
+    'I'
+
+    >>> clean_mark(u"\U000000D3")
+    'O'
+
+    >>> clean_mark(u"\U000000DA")
+    'U'
+
+    >>> clean_mark(u"\U000000F1")
+    'N'
+
+    >>> clean_mark(u"\U000000D1")
+    'N'
+
+    >>> clean_mark("A")
+    'A'
+
+    >>> clean_mark("b")
+    'b'
+
+    """
+
+    #print("raw mark: ", mark)  #, sep=" ")
+    #NFKC_normalized_mark = unicodedata.normalize('NFKC', mark)
+    #print("NFKC_normalized_mark: ", NFKC_normalized_mark)  #, sep=" ")
+
+    #NFC_normalized_mark = unicodedata.normalize('NFC', mark)
+    #print("NFC_normalized_mark: ", NFC_normalized_mark)  #, sep=" ")
+
+    #NFD_normalized_mark = unicodedata.normalize('NFD', mark)
+    #print("NFD_normalized_mark: ", NFD_normalized_mark)  #, sep=" ")
+
+    NFKD_normalized_mark = unicodedata.normalize('NFKD', mark)
+    #print("NFKD_normalized_mark: ", NFKD_normalized_mark)  #, sep=" ")
+
+    stripped_combining_mark = "".join(
+        [c for c in NFKD_normalized_mark if not unicodedata.combining(c)])
+
+    ascii_encoded_mark = stripped_combining_mark.encode('ascii')
+    #ascii_encoded_mark = normalized_mark.encode('ascii', 'ignore')
+    #ascii_encoded_mark = normalized_mark.encode('ascii')
+    #print("ascii_encoded_mark: ", ascii_encoded_mark)  #, sep=" ")
+    utf8_decoded_mark = ascii_encoded_mark.decode("utf-8")
+    #print("utf8_decoded_mark: ", utf8_decoded_mark)  #, sep=" ")
+
+    cleaned_mark = utf8_decoded_mark
+    #print("cleaned mark: ", cleaned_mark)  #, sep=" ")
+
+    if cleaned_mark == mark:
+        return mark
+    else:
+        return cleaned_mark.upper()
 
 
 def clean_interval(old_interval):
