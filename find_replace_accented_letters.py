@@ -58,31 +58,15 @@ def clean_mark(mark):
 
     """
 
-    #print("raw mark: ", mark)  #, sep=" ")
-    #NFKC_normalized_mark = unicodedata.normalize('NFKC', mark)
-    #print("NFKC_normalized_mark: ", NFKC_normalized_mark)  #, sep=" ")
-
-    #NFC_normalized_mark = unicodedata.normalize('NFC', mark)
-    #print("NFC_normalized_mark: ", NFC_normalized_mark)  #, sep=" ")
-
-    #NFD_normalized_mark = unicodedata.normalize('NFD', mark)
-    #print("NFD_normalized_mark: ", NFD_normalized_mark)  #, sep=" ")
-
     NFKD_normalized_mark = unicodedata.normalize('NFKD', mark)
-    #print("NFKD_normalized_mark: ", NFKD_normalized_mark)  #, sep=" ")
 
     stripped_combining_mark = "".join(
         [c for c in NFKD_normalized_mark if not unicodedata.combining(c)])
 
     ascii_encoded_mark = stripped_combining_mark.encode('ascii')
-    #ascii_encoded_mark = normalized_mark.encode('ascii', 'ignore')
-    #ascii_encoded_mark = normalized_mark.encode('ascii')
-    #print("ascii_encoded_mark: ", ascii_encoded_mark)  #, sep=" ")
     utf8_decoded_mark = ascii_encoded_mark.decode("utf-8")
-    #print("utf8_decoded_mark: ", utf8_decoded_mark)  #, sep=" ")
 
     cleaned_mark = utf8_decoded_mark
-    #print("cleaned mark: ", cleaned_mark)  #, sep=" ")
 
     if cleaned_mark == mark:
         return mark
