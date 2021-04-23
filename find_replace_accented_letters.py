@@ -153,21 +153,22 @@ if __name__ == "__main__":
 
     parser.add_argument('--source-file', type=str)
     parser.add_argument('--dest-file', type=str)
-    # parser.add_argument('--dest-file',
-    #                     type=argparse.FileType('w', encoding='UTF-8'))
+    parser.add_argument('--force',
+                        action="store_true",
+                        default=False,
+                        help=("force replacement, even on non-TextGrid files"))
+
     args = parser.parse_args()
 
-    #print(args.source_file)
-    #print(args.dest_file)
+    if args.force:
+        with open(args.source_file, "r") as sf:
+            with open(args.dest_file, "w") as df:
+                for l in sf.readlines():
+                    df.write(clean_mark(l))
 
-    source_tg = textgrid.TextGrid()
-    source_tg.read(f=args.source_file)
-
-    cleaned_tg = remove_accents(source_tg)
-
-    with open(args.dest_file, "w") as f:
-        cleaned_tg.write(f)
-
-    #cleaned_tg.write(args.dest_file)
-    print("done")
-    #remove_accents()
+    else:
+        source_tg = textgrid.TextGrid()
+        source_tg.read(f=args.source_file)
+        cleaned_tg = remove_accents(source_tg)
+        with open(args.dest_file, "w") as f:
+            cleaned_tg.write(f)
